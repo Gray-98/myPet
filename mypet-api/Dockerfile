@@ -4,7 +4,7 @@ RUN mkdir -p /mypet-api
 
 COPY ./routes /mypet-api/routes
 COPY app.js /mypet-api/app.js
-COPY app.js package.json package-lock.json ./
+COPY package.json package-lock.json ./
 
 RUN npm install --production
 
