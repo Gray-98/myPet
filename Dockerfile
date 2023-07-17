@@ -8,6 +8,10 @@ RUN mkdir -p /mypet-platform
 COPY mypet-api $ROOT_APP_DIR/mypet-api
 COPY mypet-platform $ROOT_APP_DIR/mypet-platform
 
+WORKDIR mypet-api
+RUN npm install --production
+
+WORKDIR mypet-platform/nextjs-mypet
 RUN npm install --production
 
 CMD cd mypet-api && npm start
