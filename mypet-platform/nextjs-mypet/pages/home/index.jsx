@@ -7,6 +7,7 @@ const Home = ({data}) => (
 		<Head><title>My pet</title></Head>
 		<div className='homepage-container'>
 			<h1>Welcome to use my pet website ~</h1>
+			<h1>我也爱你 我的伟～～～</h1>
 			<div>Home Page</div>
 			<h1>Get Information Test</h1>
 			<div>{data}</div>
