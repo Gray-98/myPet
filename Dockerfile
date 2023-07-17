@@ -16,4 +16,4 @@ COPY mypet-platform /mypet-platform
 WORKDIR mypet-platform/nextjs-mypet
 RUN npm install --production
 
-CMD npm build && npm start
+CMD npm run build && npm start
