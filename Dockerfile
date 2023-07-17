@@ -12,6 +12,7 @@ FROM node:16.14.2-alpine
 
 RUN mkdir -p /mypet-platform
 COPY mypet-platform /mypet-platform
+COPY mypet-platform/nextjs-mypet /mypet-platform/nextjs-mypet
 
 WORKDIR mypet-platform/nextjs-mypet
 RUN npm install --production
