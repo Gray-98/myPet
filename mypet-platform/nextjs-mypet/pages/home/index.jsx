@@ -1,7 +1,6 @@
 import Api from '../../lib/api'
 import Head from 'next/head'
 import {Button} from '@material-ui/core'
-import styles from './styles'
 
 const Home = ({data}) => (
 	<>
@@ -15,7 +14,12 @@ const Home = ({data}) => (
           Hello world
 			</Button>
 		</div>
-		<style jsx>{styles}</style>
+		<style jsx>{`
+			.homepage-container {
+    		text-align: center;
+  		}`
+			}
+		</style>
 	</>
 )
 
