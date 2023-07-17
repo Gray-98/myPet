@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const ApiDriver = async (method, path, options) => {
-	const url = `http://127.0.0.1:8080${path}`
+	const url = `http://43.138.161.53/:8080${path}`
 
 	return await axios({method, url, ...options})
 }
