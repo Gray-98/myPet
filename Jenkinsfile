@@ -8,6 +8,7 @@ pipeline {
 
   stages {
     stage("Build Api") {
+      agent docker
       steps {
           sh """
             cd mypet-api
@@ -17,6 +18,7 @@ pipeline {
     }
 
     stage("Build Platform") {
+      agent docker
       steps {
           sh """
             cd mypet-platform/nextjs-mypet
@@ -26,6 +28,7 @@ pipeline {
     }
 
     stage("Deploy") {
+      agent docker
       steps {
           sh """
             docker run -d -p 8080:8080 --name mypet-api mypet-api:latest
