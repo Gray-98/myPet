@@ -1,38 +1,64 @@
 <script>
     import { onMount } from "svelte";
     import * as echarts from "echarts";
-
+  
     let chart;
-
-    // 数据和配置
+  
     const option = {
       tooltip: {},
       animationDurationUpdate: 1000,
       animationEasingUpdate: "quinticInOut",
+      legend: {
+        data: ["Group A", "Group B"], // 定义分组名称
+      },
       series: [
         {
           type: "graph",
           layout: "none",
           roam: true,
+          categories: [
+            { name: "Group A" },
+            { name: "Group B" },
+          ],
           label: {
             show: true,
             position: "right",
+            formatter: (params) => {
+              return `{line1|${params.data.name}}\n{line2|${params.data.info}}`;
+            },
+            rich: {
+              line1: {
+                fontSize: 14,
+                color: "#333",
+                fontWeight: "bold",
+              },
+              line2: {
+                fontSize: 12,
+                color: "#666",
+              },
+            },
           },
           edgeSymbol: ["none", "arrow"],
           edgeSymbolSize: 10,
           data: [
-            { id: 0, name: "Root", x: 0, y: 0, symbolSize: 50 },
-            { id: 1, name: "Node 1", x: 100, y: -100, symbolSize: 40 },
-            { id: 2, name: "Node 2", x: 100, y: 100, symbolSize: 40 },
+            // Group A
+            { id: 0, name: "Root A", x: 0, y: 0, symbolSize: 50, category: 0, info: "Main Node A" },
+            { id: 1, name: "Node A1", x: 150, y: -100, symbolSize: 40, category: 0, info: "Status: Active" },
+            { id: 2, name: "Node A2", x: 150, y: 100, symbolSize: 40, category: 0, info: "Status: Success" },
+  
+            // Group B
+            { id: 3, name: "Root B", x: 400, y: 0, symbolSize: 50, category: 1, info: "Main Node B" },
+            { id: 4, name: "Node B1", x: 550, y: -100, symbolSize: 40, category: 1, info: "Status: Failed" },
+            { id: 5, name: "Node B2", x: 550, y: 100, symbolSize: 40, category: 1, info: "Retry: 2" },
           ],
           links: [
-            {
-              source: 0,
-              target: 1,
-              lineStyle: { type: "dashed" },
-              label: { show: true, formatter: "X" },
-            },
+            // Links for Group A
+            { source: 0, target: 1, lineStyle: { type: "dashed" }, label: { show: true, formatter: "X" } },
             { source: 0, target: 2 },
+  
+            // Links for Group B
+            { source: 3, target: 4, lineStyle: { type: "dashed" }, label: { show: true, formatter: "X" } },
+            { source: 3, target: 5 },
           ],
           lineStyle: {
             width: 2,
@@ -41,58 +67,23 @@
         },
       ],
     };
-
-    // 在组件挂载时初始化 ECharts
+  
     onMount(() => {
       const container = document.getElementById("chart");
       chart = echarts.init(container);
-
       chart.setOption(option);
-
-      // 添加周期性动画
-      const animateRoot = () => {
-        chart.setOption({
-          series: [
-            {
-              data: [
-                { id: 0, symbolSize: 60 }, // 放大根节点
-                { id: 1, symbolSize: 40 },
-                { id: 2, symbolSize: 40 },
-              ],
-            },
-          ],
-        });
-
-        setTimeout(() => {
-          chart.setOption({
-            series: [
-              {
-                data: [
-                  { id: 0, symbolSize: 50 }, // 恢复根节点大小
-                  { id: 1, symbolSize: 40 },
-                  { id: 2, symbolSize: 40 },
-                ],
-              },
-            ],
-          });
-        }, 500);
-      };
-
-      const interval = setInterval(animateRoot, 2000);
-
-      // 清理定时器
+  
       return () => {
-        clearInterval(interval);
         chart.dispose();
       };
     });
   </script>
-
+  
   <style>
     #chart {
       width: 100%;
       height: 100vh;
     }
   </style>
-
+  
   <div id="chart"></div>
